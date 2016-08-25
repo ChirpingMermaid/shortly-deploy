@@ -3,11 +3,11 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     concat: { // grunt concat:build
-      client: {
+      build: {
         options: {separator: ';'},
         files: {
-          'public/dist/built.js': ['public/client/*.js'],
-          'public/dist/libs.js': ['public/lib/jquery.js', 'public/lib/underscore.js', 'public/lib/backbone.js', 'public/lib/handlebars.js']
+          'public/dist/libs.js': ['public/lib/underscore.js', 'public/lib/jquery.js', 'public/lib/backbone.js', 'public/lib/handlebars.js'],
+          'public/dist/client.js': ['public/client/app.js', 'public/client/link.js', 'public/client/links.js', 'public/client/linkView.js', 'public/client/linksView.js', 'public/client/createLinkView.js', 'public/client/router.js']
         }
           // src: ['public/client/*.js'],
           // dest: 'public/dist/built.js'
@@ -37,6 +37,12 @@ module.exports = function(grunt) {
     },
 
     uglify: {
+      js: {
+        files: {
+          'public/dist/client.min.js': ['public/dist/client.js'],
+          'public/dist/libs.min.js': ['public/dist/libs.js']
+        }
+      },
     },
 
     eslint: {
@@ -46,6 +52,11 @@ module.exports = function(grunt) {
     },
 
     cssmin: {
+      target: {
+        files: {
+          'public/dist/style.min.css': ['public/style.css'] 
+        }
+      }
     },
 
     watch: {
@@ -93,6 +104,7 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('build', [
+    'concat', 'uglify', 'cssmin'
   ]);
 
   grunt.registerTask('upload', function(n) {
