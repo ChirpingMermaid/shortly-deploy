@@ -88,6 +88,7 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('deploy', [
+    'nodemon'
     // add your deploy tasks here
   ]);
 
